@@ -1,0 +1,21 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = collections.defaultdict(set)
+        columns = collections.defaultdict(set)
+        boxes = collections.defaultdict(set)
+
+        for r in range(len(board)):
+            for c in range(len(board[r])):
+                # skip if current is "."
+                if board[r][c] == ".":
+                    continue
+                # check if current number in any of the sets
+                if board[r][c] in rows[r] or board[r][c] in columns[c] or board[r][c] in boxes[(r//3, c//3)]:
+                    return False
+                # add current number into sets
+                rows[r].add(board[r][c])
+                columns[c].add(board[r][c])
+                boxes[(r//3, c//3)].add(board[r][c])
+
+        return True
+    
